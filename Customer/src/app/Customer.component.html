@@ -1,0 +1,151 @@
+<div>
+  <!-- Form Section with Top Padding -->
+  <div class="pt-5">
+    <div class="d-flex justify-content-center">
+      <div class="shadow rounded p-5 w-100" style="max-width: 500px;">
+        <form #customerForm="ngForm" (ngSubmit)="register(customerForm)">
+          <h4 class="display-6 text-center py-2">Customer Details</h4>
+
+          <!-- Name -->
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input id="name" required #name="ngModel" ngModel name="name" type="text" class="form-control"
+              placeholder="Enter customer name">
+            <div *ngIf="name.invalid && name.touched">
+              <small class="text-danger" *ngIf="name.errors?.['required']">Required</small>
+            </div>
+          </div>
+
+          <!-- Order ID -->
+          <div class="mb-3">
+            <label for="orderId" class="form-label">Order ID</label>
+            <input id="orderId" required #orderId="ngModel" ngModel name="orderId" type="number" class="form-control"
+              placeholder="Enter Order ID">
+            <div *ngIf="orderId.invalid && orderId.touched">
+              <small class="text-danger" *ngIf="orderId.errors?.['required']">Required</small>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input id="email" required #email="ngModel" ngModel name="email" type="email" class="form-control"
+              placeholder="Enter customer email">
+            <div *ngIf="email.invalid && email.touched">
+              <small class="text-danger" *ngIf="email.errors?.['required']">Required</small>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone</label>
+            <input id="phone" required #phone="ngModel" ngModel name="phone" type="text"
+              class="form-control" placeholder="Enter customer phone">
+            <div *ngIf="phone.invalid && phone.touched">
+              <small class="text-danger" *ngIf="phone.errors?.['required']">Required</small>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <input class="btn btn-primary" type="submit" value="Submit">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Customer Table Section with Top Padding -->
+    <div class="pt-5 mt-5 d-flex justify-content-center">
+    <div style="width:100%; max-width:900px;">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Order ID</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of customers">
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.orderId }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal"
+                (click)="edit(customer)">Edit</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="deleteCustomer(customer)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Edit Modal (unchanged) -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editModalLabel">Update Customer</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #updateForm="ngForm" (ngSubmit)="updateCustomer()">
+            <h4 class="display-6 text-center py-2">Update Customer</h4>
+
+            <!-- Name -->
+            <div class="mb-3">
+              <label for="editName" class="form-label">Name</label>
+              <input id="editName" required #editName="ngModel" [(ngModel)]="customerToUpdate.name" name="name"
+                type="text" class="form-control" placeholder="Enter name">
+              <div *ngIf="editName.invalid && editName.touched">
+                <small class="text-danger" *ngIf="editName.errors?.['required']">Required</small>
+              </div>
+            </div>
+
+            <!-- Order ID -->
+            <div class="mb-3">
+              <label for="editOrderId" class="form-label">Order ID</label>
+              <input id="editOrderId" required #editOrderId="ngModel" [(ngModel)]="customerToUpdate.orderId" name="orderId"
+                type="number" class="form-control" placeholder="Enter Order ID">
+              <div *ngIf="editOrderId.invalid && editOrderId.touched">
+                <small class="text-danger" *ngIf="editOrderId.errors?.['required']">Required</small>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="editEmail" class="form-label">Email</label>
+              <input id="editEmail" required #editEmail="ngModel" [(ngModel)]="customerToUpdate.email" name="email"
+                type="email" class="form-control" placeholder="Enter email">
+              <div *ngIf="editEmail.invalid && editEmail.touched">
+                <small class="text-danger" *ngIf="editEmail.errors?.['required']">Required</small>
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="mb-3">
+              <label for="editPhone" class="form-label">Phone</label>
+              <input id="editPhone" required #editPhone="ngModel" [(ngModel)]="customerToUpdate.phone" name="phone"
+                type="text" class="form-control" placeholder="Enter phone number">
+              <div *ngIf="editPhone.invalid && editPhone.touched">
+                <small class="text-danger" *ngIf="editPhone.errors?.['required']">Required</small>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <input class="btn btn-primary" type="submit" value="Update">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
